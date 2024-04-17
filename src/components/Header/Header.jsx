@@ -18,21 +18,21 @@ const Header = () => {
 
   const menuItems = [
     {
-      name: "Profile",
+      name: "Профиль",
       path: '/profile',
       click () {
         navigate('/profile')
       }
     },
     {
-      name: "Board",
+      name: "Борд",
       path: '/',
       click () {
         navigate('/')
       }
     },
     {
-      name: "Settings",
+      name: "Настройки",
       path: '/settings',
       click () {
         navigate('/settings')
@@ -40,7 +40,7 @@ const Header = () => {
     },
 
     {
-      name: "Log Out",
+      name: "Выйти",
       path: "",
       click () {
         navigate('/')
@@ -70,7 +70,7 @@ const Header = () => {
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
                     onClick={item?.click ? item.click : null}
-                    className={`w-full ${item.path === location ? "text-primary" : item.name === "Log Out" ? "text-danger" : "text-background"} cursor-pointer`}
+                    className={`w-full ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : "text-background"} cursor-pointer`}
                     size="lg"
                 >
                   {item.name}
