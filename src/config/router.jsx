@@ -3,7 +3,7 @@ import {Home} from "@/pages/Home/HomeLazy.js";
 import {TaskPage} from "@/pages/Task/TaskPageLazy.js";
 import ErrorPage from "@/pages/404/ErrorPage.jsx";
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     element: (<Home/>),
