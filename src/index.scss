@@ -1,5 +1,9 @@
+
 @import "tailwind";
 
+body {
+@apply bg-warning h-[100dvh] w-full ;
+}
 
 .line::-webkit-scrollbar, body::-webkit-scrollbar  {
   width: 0px;  /* Ширина полосы прокрутки */

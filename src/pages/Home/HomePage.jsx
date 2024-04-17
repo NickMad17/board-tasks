@@ -92,8 +92,10 @@ const HomePage = () => {
                   )
                   :
                   (
-                      <div className=' h-full bg-warning flex overflow-x-auto whitespace-no-wrap text-nowrap line'>
-                        <p className='font-[500] text-2xl text-red-600'>{tasks}</p>
+                      <div className=' h-full pt-12 flex flex-col gap-5 text-center  line'>
+                        <p className='font-[500] text-2xl text-red-600'>ОЙ, КАЖЕТСЯ ЧТО-ТО ПОШЛО НЕ ТАК</p>
+                        <p className='text-center'>Вставь сюда прикольную гивку</p>
+                        <Button variant='ghost' className='border border-red-600 text-red-600' onClick={() => location.reload()}>Reload</Button>
                       </div>
                   )}
         </div>
