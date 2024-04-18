@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Link,
   Navbar,
@@ -10,6 +11,7 @@ import {
 } from "@nextui-org/react";
 import {useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import Error from "@/components/Error.jsx";
 
 const Header = () => {
   const location = useLocation().pathname
@@ -18,23 +20,23 @@ const Header = () => {
 
   const menuItems = [
     {
-      name: "Профиль",
-      path: '/profile',
-      click () {
-        navigate('/profile')
+      name: "Добавить задачу",
+      path: '/new-task/notStatus',
+      click() {
+        navigate('/new-task/notStatus')
       }
     },
     {
-      name: "Борд",
-      path: '/',
-      click () {
-        navigate('/')
+      name: "Мои задачи",
+      path: '/profile',
+      click() {
+        navigate('/profile')
       }
     },
     {
       name: "Настройки",
       path: '/settings',
-      click () {
+      click() {
         navigate('/settings')
       }
     },
@@ -42,7 +44,7 @@ const Header = () => {
     {
       name: "Выйти",
       path: "",
-      click () {
+      click() {
         navigate('/')
       }
     }
@@ -60,9 +62,9 @@ const Header = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
-              Sign Up
-            </Button>
+            <NavLink to='/profile'>
+              <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" className='mr-5'/>
+            </NavLink>
           </NavbarItem>
         </NavbarContent>
         <NavbarMenu className='bg-foreground'>
@@ -70,9 +72,10 @@ const Header = () => {
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
                     onClick={item?.click ? item.click : null}
-                    className={`w-full ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : "text-background"} cursor-pointer`}
+                    className={`w-full ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : item.name === 'Добавить задачу' ? "text-warning" : "text-background"} cursor-pointer`}
                     size="lg"
                 >
+                  {item.icon}
                   {item.name}
                 </Link>
               </NavbarMenuItem>

@@ -7,6 +7,7 @@ import TaskTitle from "@/components/TaskCard/TaskTitle.jsx";
 import {Suspense, useEffect, useState} from "react";
 import {getTasks} from "@/api/getTasks.js";
 import Loader from "@/components/Loaders/Loader.jsx";
+import Error from "@/components/Error.jsx";
 
 const HomePage = () => {
   const [tasks, setTasks] = useState(null)
@@ -35,9 +36,9 @@ const HomePage = () => {
                             }
                           })
                           }
-                          <Link to='/new-task'>
+                          <Link to='/new-task/pending'>
                             <Button variant='light'
-                                    className='w-full h-10 flex items-center justify-center text-xl'>+</Button>
+                                    className='w-full h-10 flex items-center justify-center text-xl mt-4'>+</Button>
                           </Link>
                         </TaskWrapper>
 
@@ -51,7 +52,7 @@ const HomePage = () => {
                             }
                           })
                           }
-                          <Link to='/new-task'>
+                          <Link to='/new-task/progress'>
                             <Button variant='light'
                                     className='w-full h-10 flex items-center justify-center text-xl mt-4'>+</Button>
                           </Link>
@@ -67,7 +68,7 @@ const HomePage = () => {
                             }
                           })
                           }
-                          <Link to='/new-task'>
+                          <Link to='/new-task/review'>
                             <Button variant='light'
                                     className='w-full h-10 flex items-center justify-center text-xl mt-4'>+</Button>
                           </Link>
@@ -83,20 +84,12 @@ const HomePage = () => {
                             }
                           })
                           }
-                          <Link to='/new-task'>
-                            <Button variant='light'
-                                    className='h-10 w-full flex items-center justify-center text-xl mt-4'>+</Button>
-                          </Link>
                         </TaskWrapper>
                       </div>
                   )
                   :
                   (
-                      <div className=' h-full pt-12 flex flex-col gap-5 text-center  line'>
-                        <p className='font-[500] text-2xl text-red-600'>ОЙ, КАЖЕТСЯ ЧТО-ТО ПОШЛО НЕ ТАК</p>
-                        <p className='text-center'>Вставь сюда прикольную гивку</p>
-                        <Button variant='ghost' className='border border-red-600 text-red-600' onClick={() => location.reload()}>Reload</Button>
-                      </div>
+                     <Error/>
                   )}
         </div>
       </PageLayout>

@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getTask} from "@/api/getTask.js";
 import {data} from "autoprefixer";
@@ -10,30 +10,47 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
+  ModalHeader, Select, SelectItem,
   useDisclosure
 } from "@nextui-org/react";
 import Loader from "@/components/Loaders/Loader.jsx";
 import PageLayout from "@/components/PageLayout.jsx";
 import UserAssignedTask from "@/components/UserAssignedTask.jsx";
+import {selectTaskStatuses} from "@/config/staticData.js";
+import {updateTask} from "@/api/updateTask.js";
+import {deleteTask} from "@/api/deleteTask.js";
 
 const TaskPage = () => {
+  const navigate = useNavigate()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [loading, setLoading] = useState(null)
   const taskId = useParams().id
   const [task, setTask] = useState(null)
+  const [status, setStatus] = useState(null)
 
   const getStatusColor = (t) => {
-    return  t.status === 'pending' ? 'secondary' : t.status === 'progress' ? 'warning' : t.status === 'review' ? 'danger' : t.status === 'success' ? 'success' : 'default'
+    return t.status === 'pending' ? 'secondary' : t.status === 'progress' ? 'warning' : t.status === 'review' ? 'danger' : t.status === 'success' ? 'success' : 'default'
   }
 
-  useEffect(() => {
+  const update = () => {
     setLoading(true)
     getTask(taskId).then((data) => {
       setTask(data)
+      setStatus(data?.at(0)?.status)
       setLoading(false)
     })
+  }
+
+  useEffect(() => {
+    update()
   }, []);
+
+  const updateStatus = (t, newStatus) => {
+    updateTask(t.id, [{'status': newStatus}]).then(
+        () => update()
+    )
+  }
+
   return (
       <PageLayout>
         {!loading && task?.at(0) ? (
@@ -58,7 +75,25 @@ const TaskPage = () => {
                           })}
                         </div>
 
-                        <UserAssignedTask data={t}/>
+                        <div className="flex gap-8 flex-col">
+                          <>
+                            <Select
+                                label="Статус задачи"
+                                placeholder="Выберите статус задачи"
+                                className="max-w-sm"
+                                defaultSelectedKeys={[status]}
+                                color={getStatusColor(t)}
+                            >
+                              {selectTaskStatuses?.map((status) => {
+                                return <SelectItem onPress={() => updateStatus(t, status.value)} key={status.value}
+                                                   value={status.value}>{status.label}</SelectItem>
+                              })}
+                            </Select>
+                          </>
+
+                          <UserAssignedTask data={t}/>
+
+                        </div>
 
                         <pre className={'overflow-x-auto p-5 line w-full border-l'} key={t.id}>{t.description}</pre>
                       </div>
@@ -78,7 +113,8 @@ const TaskPage = () => {
                 </div>
               </Card>
 
-              <Modal className='bg-foreground text-background' backdrop='blur' isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={true}
+              <Modal className='bg-foreground text-background' backdrop='blur' isOpen={isOpen}
+                     onOpenChange={onOpenChange} isDismissable={true}
                      isKeyboardDismissDisabled={false}>
                 <ModalContent>
                   {(onClose) => (
@@ -93,7 +129,12 @@ const TaskPage = () => {
                           <Button color="primary" onPress={onClose}>
                             Отмена
                           </Button>
-                          <Button color="danger" variant="light" onPress={onClose}>
+                          <Button color="danger" variant="light" onPress={() => {
+                            onClose()
+                            deleteTask(task?.at(0).id).then(() => {
+                              navigate('/')
+                            })
+                          }}>
                             Удалить
                           </Button>
                         </ModalFooter>
