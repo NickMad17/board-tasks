@@ -20,10 +20,10 @@ const Header = () => {
 
   const menuItems = [
     {
-      name: "Добавить задачу",
-      path: '/new-task/notStatus',
+      name: "Борд",
+      path: '/',
       click() {
-        navigate('/new-task/notStatus')
+        navigate('/')
       }
     },
     {
