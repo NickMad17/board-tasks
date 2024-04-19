@@ -10,13 +10,15 @@ import {
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader, Select, SelectItem,
+  ModalHeader,
+  Select,
+  SelectItem,
   useDisclosure
 } from "@nextui-org/react";
 import Loader from "@/components/Loaders/Loader.jsx";
 import PageLayout from "@/components/PageLayout.jsx";
 import UserAssignedTask from "@/components/UserAssignedTask.jsx";
-import {selectTaskStatuses} from "@/config/staticData.js";
+import {selectTaskStatusesOnBoard} from "@/config/staticData.js";
 import {updateTask} from "@/api/updateTask.js";
 import {deleteTask} from "@/api/deleteTask.js";
 
@@ -84,7 +86,7 @@ const TaskPage = () => {
                                 defaultSelectedKeys={[status]}
                                 color={getStatusColor(t)}
                             >
-                              {selectTaskStatuses?.map((status) => {
+                              {selectTaskStatusesOnBoard?.map((status) => {
                                 return <SelectItem onPress={() => updateStatus(t, status.value)} key={status.value}
                                                    value={status.value}>{status.label}</SelectItem>
                               })}
@@ -92,6 +94,7 @@ const TaskPage = () => {
                           </>
 
                           <UserAssignedTask data={t}/>
+
 
                         </div>
 

@@ -40,10 +40,11 @@ const NewTask = () => {
       status,
       description,
       assigned_id: userId,
+      isAssigned : !!userId,
       types: [types],
     }
 
-    if (status && isValidText(title) && userId && types) {
+    if (status && isValidText(title) && types) {
       console.log(task)
       setTask(task).then(
           (data) => {
@@ -126,9 +127,8 @@ const NewTask = () => {
             </Select>
             {users && (
                 <Select
-                    errorMessage={userId ? '': error}
                     label="Выберете ответственного за задачу"
-                    placeholder="Выберите статус задачи"
+                    placeholder="Выбирите ответственного"
                     className="max-w-sm "
                     variant='bordered'
                     color={getColor()}

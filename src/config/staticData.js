@@ -16,6 +16,29 @@ export const selectTaskStatuses = [
   }
 ]
 
+export const selectTaskStatusesOnBoard = [
+  {
+    value: "pending",
+    label: "В ожидании",
+    color: 'secondary'
+  },
+  {
+    value: "progress",
+    label: "В работе",
+    color: 'warning'
+  },
+  {
+    value: "review",
+    label: "На проверке",
+    color: "danger"
+  },
+  {
+    value: "success",
+    label: "Готово",
+    color: "success"
+  }
+]
+
 export const selectTaskTypes = [
   {
     value: "programmer",

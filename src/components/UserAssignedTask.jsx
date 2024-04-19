@@ -15,6 +15,10 @@ const UserAssignedTask = ({data}) => {
         setLoading(false)
       })
     }
+
+    if (!data?.isAssigned) {
+      setLoading(false)
+    }
   }, []);
 
   return (
@@ -34,6 +38,15 @@ const UserAssignedTask = ({data}) => {
               {typeof assigned === 'string' && <p className='text-red-600 pl-3 text-lg font-[600]'>{assigned}</p>}
             </>
         )}
+        {
+            !data?.isAssigned && (
+                <div className="flex items-center gap-2 mb-10">
+                  <Avatar size="sm"/>
+                  <p>никто не назначен</p>
+                </div>
+
+            )
+        }
       </div>
   );
 };

@@ -9,11 +9,14 @@ const UserAssigned = ({data}) => {
 
   useEffect(() => {
     setLoading(true)
-    if (data?.assigned_id) {
+    if (data?.isAssigned) {
       getUser(data?.assigned_id).then(user => {
         setAssigned(user)
         setLoading(false)
       })
+    } else {
+      console.log('fff')
+      setLoading(false)
     }
   }, []);
 
@@ -22,18 +25,26 @@ const UserAssigned = ({data}) => {
         {loading ? <Spinner color="warning" size='md' className='w-full flex justify-center'/>
             :
             (
-            <>
-              {typeof assigned !== 'string' && assigned?.map(assigned => {
-                return (
-                    <div key={assigned.id} className="flex items-center gap-2">
-                      <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" size="sm"/>
-                      <p>{assigned.name}</p>
-                    </div>
-                )
-              })}
-              {typeof assigned === 'string' && <p className='text-red-600 pl-3 text-lg font-[600]'>{assigned}</p>}
-            </>
-        )}
+                <>
+                  {typeof assigned !== 'string' && assigned?.map(assigned => {
+                    return (
+                        <div key={assigned.id} className="flex items-center gap-2">
+                          <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" size="sm"/>
+                          <p>{assigned.name}</p>
+                        </div>
+                    )
+                  })}
+                  {typeof assigned === 'string' && <p className='text-red-600 pl-3 text-lg font-[600]'>{assigned}</p>}
+                </>
+            )}
+        {
+          !data?.isAssigned && (
+                <div className="flex items-center gap-2">
+                  <Avatar size="sm"/>
+                  <p>никто не назначен</p>
+                </div>
+            )
+        }
       </div>
   );
 };

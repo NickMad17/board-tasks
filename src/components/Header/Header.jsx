@@ -23,7 +23,7 @@ const Header = () => {
       name: "Борд",
       path: '/',
       click() {
-        navigate('/')
+        navigate('/');
       }
     },
     {
