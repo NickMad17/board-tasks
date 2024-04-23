@@ -22,7 +22,7 @@ const HomePage = () => {
 
   return (
       <PageLayout>
-        <div className='flex h-full justify-center pb-10'>
+        <div className='flex h-full justify-center pb-3'>
           {loading ?
               <div className='flex h-full items-center justify-center'><Loader/></div> : typeof tasks !== "string" ? (
                       <div className=' flex overflow-x-auto whitespace-no-wrap text-nowrap line'>
