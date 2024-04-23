@@ -72,7 +72,7 @@ const Header = () => {
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
                     onClick={item?.click ? item.click : null}
-                    className={`w-full ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : item.name === 'Добавить задачу' ? "text-warning" : "text-background"} cursor-pointer`}
+                    className={`w-full text-xl ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : item.name === 'Добавить задачу' ? "text-warning" : "text-background"} cursor-pointer`}
                     size="lg"
                 >
                   {item.icon}

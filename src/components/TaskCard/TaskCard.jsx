@@ -21,7 +21,7 @@ const TaskCard = ({data, type}) => {
               })}
             </div>
             <div className="h-[50%] flex flex-col justify-center items-center overflow-y-auto">
-              <h3 className='font-mono font-[600] text-xl'>{data?.title}</h3>
+              <h3 className='font-mono font-[600] text-xl line'>{data?.title}</h3>
             </div>
             <UserAssigned data={data}/>
           </>

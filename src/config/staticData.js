@@ -52,3 +52,14 @@ export const selectTaskTypes = [
   },
 
 ]
+
+export const selectUsers = [
+  {
+    id: "1",
+    name: "Никита",
+  },
+  {
+    id: "2",
+    name: "Ярик",
+  },
+]
