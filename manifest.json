@@ -1,0 +1,15 @@
+{
+  "name": "Board",
+  "short_name": "BRD",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000",
+  "theme_color": "#fff",
+  "icons": [
+    {
+      "src": "/vite.png",
+      "type": "image/svg",
+      "sizes": "192x192"
+    }
+  ]
+}
