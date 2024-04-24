@@ -53,13 +53,19 @@ export const selectTaskTypes = [
 
 ]
 
-export const selectUsers = [
+export const selectUsersTest = [
   {
     id: "1",
     name: "Никита",
+    img: 'https://i.ytimg.com/vi/rmx4UX_KMYI/maxresdefault.jpg',
+    tg: 'https://t.me/maady55'
   },
   {
     id: "2",
     name: "Ярик",
+    img: "https://aviaaleks.ru/wp-content/uploads/2021/01/1-vse-vozmozhno.jpg",
+    tg: 'https://t.me/YarcheTuch'
   },
 ]
+
+export const password = 'MRAHQILOFWTBP'
