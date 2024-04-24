@@ -1,17 +1,16 @@
 import {
   Avatar,
-  Button,
   Link,
   Navbar,
   NavbarBrand,
-  NavbarContent, NavbarItem,
+  NavbarContent,
+  NavbarItem,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle
 } from "@nextui-org/react";
 import {useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import Error from "@/components/Error.jsx";
 
 const Header = () => {
   const location = useLocation().pathname
@@ -34,6 +33,20 @@ const Header = () => {
       }
     },
     {
+      name: "Идеи",
+      path: '/ideas',
+      click() {
+        navigate('/ideas')
+      }
+    },
+    {
+      name: "Мемы",
+      path: '/memes',
+      click() {
+        navigate('/memes');
+      }
+    },
+    {
       name: "Настройки",
       path: '/settings',
       click() {
@@ -45,7 +58,7 @@ const Header = () => {
       name: "Выйти",
       path: "",
       click() {
-        navigate('/')
+        navigate('/login')
       }
     }
   ];
@@ -72,7 +85,7 @@ const Header = () => {
               <NavbarMenuItem key={`${item}-${index}`}>
                 <Link
                     onClick={item?.click ? item.click : null}
-                    className={`w-full text-xl ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : item.name === 'Добавить задачу' ? "text-warning" : "text-background"} cursor-pointer`}
+                    className={`w-full text-xl ${item.path === location ? "text-primary" : item.name === "Выйти" ? "text-danger" : item.name === 'Мемы' ? "text-warning" : "text-background"} cursor-pointer`}
                     size="lg"
                 >
                   {item.icon}
