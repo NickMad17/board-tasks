@@ -1,4 +1,4 @@
-import {Button, Card, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
+import {Avatar, Button, Card, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
 import {selectTaskStatuses, selectUsers} from "@/config/staticData.js";
 
 const Login = () => {
@@ -15,9 +15,16 @@ const Login = () => {
                 variant='flat'
             >
               {selectUsers?.map((user) => {
-                console.log(user,'user')
-                return <SelectItem key={user.id}
-                                   value={user.id}>{user.name}</SelectItem>
+                return (
+                    <SelectItem  key={user.id}
+                                    value={user.id}
+                    >
+                      <div className='flex gap-4 items-center '>
+                        <Avatar size='sm'/>
+                        <p>{user.name}</p>
+                      </div>
+                    </SelectItem>
+                )
               })}
             </Select>
           </div>
@@ -30,7 +37,7 @@ const Login = () => {
             <p>Согласны ли вы приносить пользу проекту ?</p>
           </div>
           <Button color='success' size='lg' className='mt-3'>Войти</Button>
-          <Button variant='ghost'  color='warning' >Хотите присоединится к команде?</Button>
+          <Button variant='ghost' color='warning'>Хотите присоединится к команде?</Button>
         </Card>
       </div>
   );
