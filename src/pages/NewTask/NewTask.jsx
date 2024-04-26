@@ -133,7 +133,7 @@ const NewTask = () => {
                     variant='bordered'
                     color={getColor()}
                 >
-                  {users?.map((user) => {
+                  {typeof users !== 'string' && users?.map((user) => {
                     return <SelectItem
                         onPress={() => setUserId(user.id)}
                         key={user.id}

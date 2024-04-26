@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {getUser} from "@/api/getUser.js";
 import {Avatar, Spacer, Spinner} from "@nextui-org/react";
 import Loader from "@/components/Loaders/Loader.jsx";
+import {baseImageUrl} from "@/config/supabase.js";
 
 const UserAssignedTask = ({data}) => {
   const [assigned, setAssigned] = useState(null)
@@ -30,7 +31,7 @@ const UserAssignedTask = ({data}) => {
               {typeof assigned !== 'string' && assigned?.map(assigned => {
                 return (
                     <div key={assigned.id} className="flex items-center gap-2 mb-10">
-                      <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" size="lg" />
+                      <Avatar src={`${baseImageUrl}/avatars/${assigned.id}.jpg`} size="lg" />
                       <p className='text-2xl'>{assigned.name}</p>
                     </div>
                 )

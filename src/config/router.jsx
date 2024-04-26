@@ -4,6 +4,7 @@ import {TaskPage} from "@/pages/Task/TaskPage.lazy.js";
 import ErrorPage from "@/pages/404/ErrorPage.jsx";
 import {NewTask} from "@/pages/NewTask/NewTask.lazy.js";
 import {Login} from "@/pages/Login/Login.lazy.js";
+import {IdeasPage} from "@/pages/IdeasPage/Ideas.lazy.js";
 
 export const router = createHashRouter([
   {
@@ -21,6 +22,10 @@ export const router = createHashRouter([
   {
     path: "/task/:id",
     element: <TaskPage/>
+  },
+  {
+    path: '/ideas',
+    element: <IdeasPage/>
   },
   {
     path: "*",

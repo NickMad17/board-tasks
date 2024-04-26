@@ -1,6 +1,8 @@
 import {Avatar, Link, Select, SelectItem} from "@nextui-org/react";
+import {baseImageUrl} from "@/config/supabase.js";
 
-const UserSelect = ({items, color, error}) => {
+const UserSelect = ({items, valueItem, setValue, color, error}) => {
+  console.log(valueItem)
   return (
       <Select
           errorMessage={error ? error : ''}
@@ -9,6 +11,7 @@ const UserSelect = ({items, color, error}) => {
           className="max-w-sm "
           color={color ? color : ''}
           variant="bordered"
+          defaultSelectedKeys={valueItem ? [valueItem] : ''}
           classNames={{
             label: "group-data-[filled=true]:-translate-y-5",
             trigger: "min-h-16",
@@ -42,7 +45,7 @@ const UserSelect = ({items, color, error}) => {
                       alt={item.data.name}
                       className="flex-shrink-0"
                       size="sm"
-                      src={item.data.img}
+                      src={`${baseImageUrl}/avatars/${item.data.id}.jpg`}
                   />
                   <div className="flex flex-col">
                     <span>{item.data.name}</span>
@@ -55,7 +58,7 @@ const UserSelect = ({items, color, error}) => {
         {(user) => (
             <SelectItem key={user.id} textValue={user.name}>
               <div className="flex gap-2 items-center">
-                <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={user.img} />
+                <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={`${baseImageUrl}/avatars/${user.id}.jpg`} />
                 <div className="flex flex-col">
                   <span className="text-small">{user.name}</span>
                   <span className="text-tiny text-default-400">{user.tg}</span>
