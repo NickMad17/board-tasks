@@ -33,6 +33,7 @@ const TaskPage = () => {
   const [status, setStatus] = useState(null)
   const [description, setDescription] = useState(null)
   const [users, setUsers] = useState(null)
+  const [user, setUser] = useState(null)
   const [isRedact, setRedact] = useState(false)
 
   const getStatusColor = () => {
@@ -42,9 +43,13 @@ const TaskPage = () => {
   const update = () => {
     setLoading(true)
     getTask(taskId).then((data) => {
-      setTask(data[0])
+      setTask(data?.at(0))
       setStatus(data?.at(0)?.status)
       setDescription(data?.at(0)?.description)
+      console.log(data, 'ddd')
+      if (data.at(0)?.isAssigned) {
+        setUser(data.at(0)?.assigned_id)
+      }
       setLoading(false)
     })
   }
@@ -63,7 +68,9 @@ const TaskPage = () => {
 
   const setRedOption = () => {
     if (isRedact) {
+      console.log(user)
       updateFiled('description', description)
+      updateFiled('assigned_id', user)
       setRedact(!isRedact)
     } else {
       setRedact(!isRedact)
@@ -111,8 +118,9 @@ const TaskPage = () => {
                       </Select>
                     </>
 
-                    {isRedact ? <div className='my-5'><UserSelect items={users} valueItem={task?.assigned_id}/></div>
-                        : <UserAssignedTask data={task}/>}
+                    {isRedact ? <div className='my-5'><UserSelect items={users} valueItem={user}
+                                                                  setValue={setUser}/></div>
+                        : <UserAssignedTask assigned_id={user}/>}
 
 
                   </div>

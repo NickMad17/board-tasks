@@ -56,7 +56,7 @@ const UserSelect = ({items, valueItem, setValue, color, error}) => {
           }}
       >
         {(user) => (
-            <SelectItem key={user.id} textValue={user.name}>
+            <SelectItem onPress={() => setValue(user.id)} key={user.id} textValue={user.name}>
               <div className="flex gap-2 items-center">
                 <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={`${baseImageUrl}/avatars/${user.id}.jpg`} />
                 <div className="flex flex-col">
