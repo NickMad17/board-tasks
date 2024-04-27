@@ -24,13 +24,13 @@ const UserAssignedTask = ({assigned_id}) => {
                 <>
                   {typeof assigned !== 'string' && assigned?.map(assigned => {
                     return (
-                        <>
+                        <div>
                           <div key={assigned.id} className="flex items-center gap-2 ">
                             <Avatar src={`${baseImageUrl}/avatars/${assigned.id}.jpg`} size="lg"/>
                             <p className='text-2xl'>{assigned.name}</p>
                           </div>
-                          <Button className='mb-10 cursor-pointer w-32' color='primary' variant='ghost'><Link href={assigned?.tg} color='foreground'>Напиши мне</Link></Button>
-                        </>
+                          <Link className='mb-7 mt-2 cursor-pointer ml-1' size='lg' href={assigned?.tg} >Telegramm</Link>
+                        </div>
 
                     )
                   })}
