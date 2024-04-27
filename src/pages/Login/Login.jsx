@@ -48,8 +48,6 @@ const Login = () => {
       if (controller === password) {
         localStorage.setItem('userId', user + '_' + password)
         setSession(user + '_' + password)
-        //Todo тут обработка
-
         setTimeout(() => {
           push('/')
         })

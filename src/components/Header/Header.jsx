@@ -11,8 +11,10 @@ import {
 } from "@nextui-org/react";
 import {useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {useAuth} from "@/hooks/authProvider.js";
 
 const Header = () => {
+  const {setSession} = useAuth()
   const location = useLocation().pathname
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,6 +60,8 @@ const Header = () => {
       name: "Выйти",
       path: "",
       click() {
+        localStorage.removeItem('userId')
+        setSession(null)
         navigate('/login')
       }
     }
