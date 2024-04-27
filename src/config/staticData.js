@@ -68,4 +68,4 @@ export const selectUsersTest = [
   },
 ]
 
-export const password = 'MRAHQILOFWTBP'
+export const password = import.meta.env.VITE_APP_SUPER_KEY;

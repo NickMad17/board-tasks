@@ -1,6 +1,6 @@
 export const vizhener = {
-  ru : "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".split(""),
-  en : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
+  ru : "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзиклмнопрстуфчцчшщъьэюя".split(""),
+  en : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgjklmnopqrstuwxyz".split(""),
   square : [],
   genSqViz : function (lang) {
     let l = this[lang], square = [];
@@ -44,5 +44,3 @@ export const vizhener = {
   }
 };
 
-console.log(vizhener.encryption("en", "EYETOASSRULIT", "ITWOC"))
-console.log(vizhener.decryption("en", "ITWOC", "MRAHQILOFWTBP"))

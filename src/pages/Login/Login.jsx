@@ -6,25 +6,70 @@ import {vizhener} from "@/api/test.js";
 import {getUsers} from "@/api/getUsers.js";
 import Error from "@/components/Error.jsx";
 import PageLayout from "@/components/PageLayout.jsx";
+import Loader from "@/components/Loaders/Loader.jsx";
+import {useNavigate, useNavigation} from "react-router-dom";
+import {useAuth} from "@/hooks/authProvider.js";
 
 
 const Login = () => {
-  const [yourPassword, setYourPassword] = useState(null)
-  const [key, setKey] = useState(null)
-  const [error, setError] = useState(null)
+  const push = useNavigate()
+  const {setSession} = useAuth()
+
+  const [loading, setLoading] = useState(false)
+  const [yourPassword, setYourPassword] = useState('')
+  const [key, setKey] = useState('')
   const [users, setUsers] = useState(null)
+  const [user, setUser] = useState(null)
+  const [errorPassword, setErrorPassword] = useState(null)
+  const [errorKey, setErrorKey] = useState(null)
+  const [errorUser, setErrorUser] = useState(null)
+
 
   useEffect(() => {
+    setLoading(true)
     getUsers().then(data => {
+      setLoading(false)
       setUsers(data)
     })
   }, []);
 
+  const isCyrillic = (text) => /[а-я]/i.test(text);
+
   const submit = () => {
-    if (key && yourPassword) {
-      const controller = vizhener.encryption("en", yourPassword, key)
+    if (key && yourPassword && user) {
+      const lang = isCyrillic(yourPassword) ? null : 'en'
+      let controller
+      if (lang === 'en') {
+        controller = vizhener.encryption(lang, yourPassword, key)
+      } else {
+        controller = ''
+      }
+      console.log(controller, password)
       if (controller === password) {
+        localStorage.setItem('userId', user + '_' + password)
+        setSession(user + '_' + password)
         //Todo тут обработка
+
+        setTimeout(() => {
+          push('/')
+        })
+      } else {
+        setErrorKey('Неверный ключ')
+        setErrorPassword('Неверный пароль')
+
+      }
+    } else {
+      setErrorKey('')
+      setErrorPassword('')
+      setErrorUser(null)
+      if (key === '') {
+        setErrorKey('Заполните поле с ключом')
+      }
+      if (yourPassword === '') {
+        setErrorPassword('Заполните поле с парольем')
+      }
+      if (!user) {
+        setErrorUser('Выберите члена команды')
       }
     }
   }
@@ -32,23 +77,28 @@ const Login = () => {
 
   return (
       <>
-        {(users && typeof users !== "string") ?
+        {loading ? <div className='flex h-full items-center justify-center'><Loader/>
+        </div> : (users && typeof users !== "string") ?
             (
                 <div className='overflow-y-auto w-full h-full flex justify-center items-center'>
                   <Card className='max-sm:w-full max-sm:h-full max-sm:bg-background p-8 flex flex-col gap-5'>
                     <h2 className='text-center text-2xl'>Вход</h2>
                     <div>
                       <p className='text-lg pb-2'>Кто вы</p>
-                      <UserSelect items={users}/>
+                      <UserSelect items={users} valueItem={user} setValue={setUser} color={errorUser ? 'danger' : ''}/>
                     </div>
                     <div className='flex flex-col gap-3'>
                       <p className='text-lg pb-2'>Введите пароль и ключ</p>
-                      <Input errorMessage='Неверный ключ пароль' onChange={(e) => setYourPassword(e.target.value)}
-                             type='text'
-                             label='Пароль' variant='bordered'/>
-                      <Input errorMessage='неверный ключ или пароль' onChange={(e) => setKey(e.target.value)}
-                             type='text'
-                             label='Ключ' size='sm' variant='bordered'/>
+                      <Input
+                          errorMessage={errorPassword}
+                          onChange={(e) => setYourPassword(e.target.value)}
+                          type='text'
+                          label='Пароль' variant='bordered'/>
+                      <Input
+                          errorMessage={errorKey}
+                          onChange={(e) => setKey(e.target.value)}
+                          type='text'
+                          label='Ключ' size='sm' variant='bordered'/>
                     </div>
                     <div className='flex gap-1 items-center'>
                       <Checkbox/>

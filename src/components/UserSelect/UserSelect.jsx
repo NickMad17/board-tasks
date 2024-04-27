@@ -2,13 +2,13 @@ import {Avatar, Link, Select, SelectItem} from "@nextui-org/react";
 import {baseImageUrl} from "@/config/supabase.js";
 
 const UserSelect = ({items, valueItem, setValue, color, error}) => {
-  console.log(valueItem)
   return (
       <Select
+          aria-label='w'
           errorMessage={error ? error : ''}
           items={items}
           placeholder='Кто вы из членов команды?'
-          className="max-w-sm "
+          className={`max-w-sm ${color !== '' ? 'border-danger border-3 rounded-2xl' : ''}`}
           color={color ? color : ''}
           variant="bordered"
           defaultSelectedKeys={valueItem ? [valueItem] : ''}

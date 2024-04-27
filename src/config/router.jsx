@@ -5,6 +5,7 @@ import ErrorPage from "@/pages/404/ErrorPage.jsx";
 import {NewTask} from "@/pages/NewTask/NewTask.lazy.js";
 import {Login} from "@/pages/Login/Login.lazy.js";
 import {IdeasPage} from "@/pages/IdeasPage/Ideas.lazy.js";
+import ProtectedRoute from "@/components/ProtectedRoute.jsx";
 
 export const router = createHashRouter([
   {
@@ -13,19 +14,35 @@ export const router = createHashRouter([
   }
   , {
     path: "/",
-    element: (<Home/>),
+    element: (
+        <ProtectedRoute>
+          <Home/>
+        </ProtectedRoute>
+    ),
   },
   {
     path: "/new-task/:type",
-    element: <NewTask/>,
+    element: (
+        <ProtectedRoute>
+          <NewTask/>
+        </ProtectedRoute>
+    ),
   },
   {
     path: "/task/:id",
-    element: <TaskPage/>
+    element: (
+        <ProtectedRoute>
+          <TaskPage/>
+        </ProtectedRoute>
+    )
   },
   {
     path: '/ideas',
-    element: <IdeasPage/>
+    element: (
+        <ProtectedRoute>
+          <IdeasPage/>
+        </ProtectedRoute>
+    )
   },
   {
     path: "*",
