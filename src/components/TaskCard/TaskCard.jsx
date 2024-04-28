@@ -5,7 +5,7 @@ import UserAssigned from "@/components/UserAssigned.jsx";
 const TaskCard = ({data, type}) => {
 
   return (
-      <Link to={`task/${data.id}`}>
+      <Link to={`/task/${data.id}`}>
         <Card
             className={`relative cursor-pointer text-wrap w-full h-full flex gap-2 flex-col justify-between p-6 my-5 border border-${type}`}>
           <>
@@ -20,8 +20,8 @@ const TaskCard = ({data, type}) => {
                 }
               })}
             </div>
-            <div className="h-[50%] flex flex-col justify-center items-center overflow-y-auto">
-              <h3 className='font-mono font-[600] text-xl line'>{data?.title}</h3>
+            <div className="h-[50%] flex flex-col justify-center items-center overflow-y-auto line">
+              <h3 className='font-mono font-[600] text-xl linex'>{data?.title}</h3>
             </div>
             <UserAssigned data={data}/>
           </>

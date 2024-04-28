@@ -3,10 +3,19 @@ import {getUser} from "@/api/getUser.js";
 import {Avatar, Button, Link, Spacer, Spinner} from "@nextui-org/react";
 import Loader from "@/components/Loaders/Loader.jsx";
 import {baseImageUrl} from "@/config/supabase.js";
+import {fetchAvatar} from "@/api/fetchAvatar.js";
 
 const UserAssignedTask = ({assigned_id}) => {
   const [assigned, setAssigned] = useState(null)
   const [loading, setLoading] = useState(null)
+  const [avatar, setAvatar] = useState(null)
+
+  useEffect(() => {
+    fetchAvatar(assigned_id)
+        .then(data => {
+          setAvatar(data)
+        })
+  }, []);
 
   useEffect(() => {
     setLoading(true)
@@ -25,11 +34,13 @@ const UserAssignedTask = ({assigned_id}) => {
                   {typeof assigned !== 'string' && assigned?.map(assigned => {
                     return (
                         <div>
-                          <div key={assigned.id} className="flex items-center gap-2 ">
-                            <Avatar src={`${baseImageUrl}/avatars/${assigned.id}.jpg`} size="lg"/>
-                            <p className='text-2xl'>{assigned.name}</p>
+                          <div key={assigned.id} className="flex items-center gap-2 mb-5">
+                            <Avatar src={avatar} size="lg"/>
+                            <div className='flex-col'>
+                              <p className='text-2xl'>{assigned.name}</p>
+                              <Link className=' cursor-pointer' size='md' href={assigned?.tg} >Telegramm</Link>
+                            </div>
                           </div>
-                          <Link className='mb-7 mt-2 cursor-pointer ml-1' size='lg' href={assigned?.tg} >Telegramm</Link>
                         </div>
 
                     )

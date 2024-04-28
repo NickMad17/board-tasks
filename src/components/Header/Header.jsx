@@ -1,5 +1,5 @@
 import {
-  Avatar,
+  Avatar, Chip,
   Link,
   Navbar,
   NavbarBrand,
@@ -9,15 +9,26 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle
 } from "@nextui-org/react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useAuth} from "@/hooks/authProvider.js";
+import {fetchAvatar} from "@/api/fetchAvatar.js";
 
 const Header = () => {
   const {setSession} = useAuth()
   const location = useLocation().pathname
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {session} = useAuth()
+  const userId = session?.split("_")?.at(0);
+  const [avatar, setAvatar] = useState(null)
+
+  useEffect(() => {
+    fetchAvatar(userId)
+        .then(data => {
+          setAvatar(data)
+        })
+  }, []);
 
   const menuItems = [
     {
@@ -29,9 +40,9 @@ const Header = () => {
     },
     {
       name: "Мои задачи",
-      path: '/profile',
+      path: '/my-tasks',
       click() {
-        navigate('/profile')
+        navigate('/my-tasks')
       }
     },
     {
@@ -77,10 +88,16 @@ const Header = () => {
             <NavLink to='/' className="font-bold text-foreground">BOARD</NavLink>
           </NavbarBrand>
         </NavbarContent>
+        <NavbarContent justify="center">
+          <NavbarItem>
+            {location === '/my-tasks' ?
+                <Chip className='text-lg min-h-10' color="warning" variant="bordered" size='lg'>Мои задачи</Chip> : ''}
+          </NavbarItem>
+        </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
             <NavLink to='/profile'>
-              <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026302d" className='mr-5'/>
+              <Avatar src={avatar} className='mr-5'/>
             </NavLink>
           </NavbarItem>
         </NavbarContent>

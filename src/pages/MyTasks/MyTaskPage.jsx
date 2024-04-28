@@ -8,13 +8,18 @@ import {useEffect, useState} from "react";
 import {getTasks} from "@/api/getTasks.js";
 import Loader from "@/components/Loaders/Loader.jsx";
 import Error from "@/components/Error.jsx";
+import {useAuth} from "@/hooks/authProvider.js";
+import {getUserTasks} from "@/api/getUserTasks.js";
 
-const HomePage = () => {
+const MyTaskPage = () => {
   const [tasks, setTasks] = useState(null)
   const [loading, setLoading] = useState(null)
+  const {session} = useAuth()
+  const userId = session?.split("_")?.at(0);
+
   useEffect(() => {
     setLoading(true)
-    getTasks().then((data) => {
+    getUserTasks(userId).then((data) => {
       setTasks(data)
       setLoading(false)
     })
@@ -96,4 +101,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default MyTaskPage;

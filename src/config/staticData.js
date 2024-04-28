@@ -1,3 +1,5 @@
+import {baseImageUrl} from "@/config/supabase.js";
+
 export const selectTaskStatuses = [
   {
     value: "pending",
@@ -69,3 +71,4 @@ export const selectUsersTest = [
 ]
 
 export const password = import.meta.env.VITE_APP_SUPER_KEY;
+

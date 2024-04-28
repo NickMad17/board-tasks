@@ -1,11 +1,14 @@
 import {useEffect, useState} from "react";
 import {getUser} from "@/api/getUser.js";
-import {Avatar, Spacer, Spinner} from "@nextui-org/react";
-import Loader from "@/components/Loaders/Loader.jsx";
+import {Avatar, Spinner} from "@nextui-org/react";
+import {fetchAvatar} from "@/api/fetchAvatar.js";
+import {useAuth} from "@/hooks/authProvider.js";
 
 const UserAssigned = ({data}) => {
   const [assigned, setAssigned] = useState(null)
   const [loading, setLoading] = useState(null)
+  const [avatar, setAvatar] = useState(null)
+
 
   useEffect(() => {
     setLoading(true)
@@ -13,6 +16,11 @@ const UserAssigned = ({data}) => {
       getUser(data?.assigned_id).then(user => {
         setAssigned(user)
         setLoading(false)
+        return user.at(0)
+      }).then((user) => {
+        return fetchAvatar(user.id)
+      }).then(data => {
+        setAvatar(data)
       })
     } else {
       console.log('fff')
@@ -29,7 +37,7 @@ const UserAssigned = ({data}) => {
                   {typeof assigned !== 'string' && assigned?.map(assigned => {
                     return (
                         <div key={assigned.id} className="flex items-center gap-2">
-                          <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026704d" size="sm"/>
+                          <Avatar src={avatar} size="sm"/>
                           <p>{assigned.name}</p>
                         </div>
                     )
@@ -38,7 +46,7 @@ const UserAssigned = ({data}) => {
                 </>
             )}
         {
-          !data?.isAssigned && (
+            !data?.isAssigned && (
                 <div className="flex items-center gap-2">
                   <Avatar size="sm"/>
                   <p>никто не назначен</p>
