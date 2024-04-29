@@ -13,10 +13,10 @@ const TaskCard = ({data, type}) => {
             <div className="w-full flex gap-2 overflow-x-auto px-1 line">
               {data?.types?.map(type => {
                 if (type === "programmer") {
-                  return <Chip key={type} size='lg' color="primary" variant="bordered">Программирование</Chip>
+                  return <Chip key={type} size='lg' className='max-md:text-sm' color="primary" variant="bordered">Программирование</Chip>
                 }
                 if (type === "engineer") {
-                  return <Chip key={type} size='lg' color="warning" variant="bordered">Инженеринг</Chip>
+                  return <Chip key={type} size='lg' className='max-md:text-sm' color="warning" variant="bordered">Инженеринг</Chip>
                 }
               })}
             </div>

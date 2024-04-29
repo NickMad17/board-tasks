@@ -85,14 +85,8 @@ const Header = () => {
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
           <NavbarBrand>
-            <NavLink to='/' className="font-bold text-foreground">BOARD</NavLink>
+            <NavLink to='/' className="font-bold text-foreground max-sm:text-[14px]">BOARD</NavLink>
           </NavbarBrand>
-        </NavbarContent>
-        <NavbarContent justify="center">
-          <NavbarItem>
-            {location === '/my-tasks' ?
-                <Chip className='text-lg min-h-10' color="warning" variant="bordered" size='lg'>Мои задачи</Chip> : ''}
-          </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
