@@ -103,7 +103,7 @@ const Login = () => {
                       <p>Согласны ли вы приносить пользу проекту ?</p>
                     </div>
                     <Button onPress={submit} color='success' size='lg' className='mt-3'>Войти</Button>
-                    <Button variant='ghost' color='warning'>Хотите присоединится к команде?</Button>
+                    <Button type='submit' variant='ghost' color='warning'><a href='https://t.me/YarcheTuch'>Хотите присоединится к команде?</a></Button>
                   </Card>
                 </div>
             ) : (
