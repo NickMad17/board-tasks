@@ -6,7 +6,7 @@ export const AuthContext = createContext(null)
 
 const AuthProvider = ({children}) => {
   const token = localStorage.getItem('userId')
-  const [session, setSession] = useState(token && token.split('_')[1] === password ? token : null)
+  const [session, setSession] = useState(token && token.split('_').at(-1) === password ? token : null)
 
   return <AuthContext.Provider value={{
     session,

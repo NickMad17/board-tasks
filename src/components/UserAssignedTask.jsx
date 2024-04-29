@@ -31,31 +31,32 @@ const UserAssignedTask = ({assigned_id}) => {
         {loading ? <Spinner color="warning" size='md' className='w-full flex  ml-3'/> : assigned ?
             (
                 <>
-                  {typeof assigned !== 'string' && assigned?.map(assigned => {
-                    return (
-                        <div>
-                          <div key={assigned.id} className="flex items-center gap-2 mb-5">
-                            <Avatar src={avatar} size="lg"/>
-                            <div className='flex-col'>
-                              <p className='text-2xl'>{assigned.name}</p>
-                              <Link className=' cursor-pointer' size='md' href={assigned?.tg} >Telegramm</Link>
+                  {typeof assigned !== 'string' ? assigned?.map(assigned => {
+                        return (
+                            <div>
+                              <div key={assigned.id} className="flex items-center gap-2 mb-5">
+                                <Avatar src={avatar} size="lg"/>
+                                <div className='flex-col'>
+                                  <p className='text-2xl'>{assigned.name}</p>
+                                  <Link className=' cursor-pointer' size='md' href={assigned?.tg}>Telegramm</Link>
+                                </div>
+                              </div>
                             </div>
+
+                        )
+                      })
+                      :
+                      (
+                          <div className="flex items-center gap-2 mb-10">
+                            <Avatar size="sm"/>
+                            <p>никто не назначен</p>
                           </div>
-                        </div>
 
-                    )
-                  })}
-                  {typeof assigned === 'string' && <p className='text-red-600 pl-3 text-lg font-[600]'>{assigned}</p>}
+                      )
+                  }
                 </>
-            )
-            :
-            (
-                <div className="flex items-center gap-2 mb-10">
-                  <Avatar size="sm"/>
-                  <p>никто не назначен</p>
-                </div>
-
-            )
+            ) :
+            <p className='text-red-600 pl-3 text-lg font-[600]'>{assigned}</p>
         }
       </div>
   );

@@ -6,7 +6,6 @@ export const fetchAvatar = async (id) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    console.log(response)
     const blob = await response.blob();
     return  URL.createObjectURL(blob)
   } catch (error) {

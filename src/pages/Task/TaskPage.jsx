@@ -46,7 +46,6 @@ const TaskPage = () => {
       setTask(data?.at(0))
       setStatus(data?.at(0)?.status)
       setDescription(data?.at(0)?.description)
-      console.log(data, 'ddd')
       if (data.at(0)?.isAssigned) {
         setUser(data.at(0)?.assigned_id)
       }
@@ -62,7 +61,6 @@ const TaskPage = () => {
   }, []);
 
   const updateFiled = (field, state) => {
-    console.log(state)
     updateTask(task.id, [{[field]: state}])
   }
 

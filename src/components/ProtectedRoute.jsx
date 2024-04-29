@@ -5,7 +5,6 @@ import {useEffect} from "react";
 const ProtectedRoute = ({children}) => {
   const {session} = useAuth()
   const navigate = useNavigate()
-  console.log(session)
 
   useEffect(() => {
     if (!session) {

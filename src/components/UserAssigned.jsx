@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {getUser} from "@/api/getUser.js";
 import {Avatar, Spinner} from "@nextui-org/react";
 import {fetchAvatar} from "@/api/fetchAvatar.js";
-import {useAuth} from "@/hooks/authProvider.js";
 
 const UserAssigned = ({data}) => {
   const [assigned, setAssigned] = useState(null)
@@ -30,7 +29,7 @@ const UserAssigned = ({data}) => {
 
   return (
       <div className='w-full flex items-center gap-4 overflow-x-auto line'>
-        {loading ? <Spinner color="warning" size='md' className='w-full flex justify-center'/>
+        {loading ? <Spinner color="warning" className=' flex justify-center'/>
             :
             (
                 <>

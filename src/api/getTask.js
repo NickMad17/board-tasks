@@ -7,7 +7,7 @@ export const getTask = async (id) => {
       .eq('id', id)
 
   if (data) {
-    console.log(data)
+    console.log(data, 'task')
     return data
   }
 

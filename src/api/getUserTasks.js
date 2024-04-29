@@ -8,7 +8,7 @@ export const getUserTasks = async (id) => {
 
 
   if (data) {
-    console.log(data)
+    console.log(data, 'user tasks')
     return data
   }
 

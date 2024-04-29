@@ -6,7 +6,7 @@ export const getTasks = async () => {
       .select("*")
 
   if (data) {
-    console.log(data)
+    console.log(data, 'tasks')
     return data
   }
 
