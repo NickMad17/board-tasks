@@ -90,7 +90,7 @@ const Login = () => {
                       <Input
                           errorMessage={errorPassword}
                           onChange={(e) => setYourPassword(e.target.value)}
-                          type='text'
+                          type='password'
                           label='Пароль' variant='bordered'/>
                       <Input
                           errorMessage={errorKey}
