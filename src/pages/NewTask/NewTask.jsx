@@ -67,15 +67,15 @@ const NewTask = () => {
   }
 
   const getAiContent = () => {
-    if (title.length > 2) {
-      setLoading(true)
-      askAi(title).then(data => {
-        setDescription(data)
-        setLoading(false)
-      })
-    } else {
-      setErrorAI('Введите название задачи')
-    }
+    // if (title.length > 2) {
+    //   setLoading(true)
+    //   askAi(title).then(data => {
+    //     setDescription(data)
+    //     setLoading(false)
+    //   })
+    // } else {
+    //   setErrorAI('Введите название задачи')
+    // }
   }
 
   return (
