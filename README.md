@@ -1,2 +1,2 @@
 ## Ссылка на проект
-https://board-tasks-alpha.vercel.app/
+https://board-tasks-eight.vercel.app
