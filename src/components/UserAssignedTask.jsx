@@ -27,7 +27,7 @@ const UserAssignedTask = ({assigned_id}) => {
 
 
   return (
-      <div className='w-full flex flex-col justify-center gap-4 overflow-x-auto line'>
+      <div className='w-full flex flex-col justify-center my-4 gap-4 overflow-x-auto line'>
         {loading ? <Spinner color="warning" size='md' className='w-full flex  ml-3'/> : assigned ?
             (
                 <>

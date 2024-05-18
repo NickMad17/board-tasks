@@ -27,6 +27,7 @@ import UserSelect from "@/components/UserSelect/UserSelect.jsx";
 const TaskPage = () => {
   const navigate = useNavigate()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const [isDescription, setbullDescription] = useState(null)
   const [loading, setLoading] = useState(null)
   const taskId = useParams().id
   const [task, setTask] = useState(null)
@@ -35,7 +36,6 @@ const TaskPage = () => {
   const [users, setUsers] = useState(null)
   const [user, setUser] = useState(null)
   const [isRedact, setRedact] = useState(false)
-
   const getStatusColor = () => {
     return status === 'pending' ? 'secondary' : status === 'progress' ? 'warning' : status === 'review' ? 'danger' : status === 'success' ? 'success' : 'default'
   }
@@ -79,7 +79,7 @@ const TaskPage = () => {
       <PageLayout>
         {!loading && task ? (
             <>
-              <Card className={`max-md:mx-0 mx-10 p-5 border overflow-auto border-${getStatusColor()}`}>
+              <div className='max-md:mx-0 mx-5 p-5 overflow-auto'>
                 <div key={task.id + 3}>
                   <div className="mb-10 flex flex-wrap gap-5 justify-between items-center">
                     <h2
@@ -116,17 +116,32 @@ const TaskPage = () => {
                       </Select>
                     </>
 
-                    {isRedact ? <div className='my-5'><UserSelect items={users} valueItem={user}
+                    {isRedact ? <div className='my-5'><UserSelect color='' items={users} valueItem={user}
                                                                   setValue={setUser}/></div>
                         : <UserAssignedTask assigned_id={user}/>}
 
 
                   </div>
 
-                  {isRedact ?
-                      <Textarea value={description} onInput={e => setDescription(e.target.value)} key={task.id}/> :
-                      <pre className='overflow-x-auto p-5 line w-full border-l'
-                           key={task.id}>{description}</pre>}
+                  <div className='max-sm:flex flex-col'>
+                    <Textarea value={description} onDoubleClick={() => console.log('dfdfdfdf')} disabled={!isRedact}
+                              variant='bordered' color={getStatusColor()}
+                              onInput={e => setDescription(e.target.value)}
+                              key={task.id}>
+                    </Textarea>
+                    <Button
+                        className='my-3'
+                        variant='bordered'
+                        color={getStatusColor()}
+                        size='sm'
+                        onClick={() => {
+                          setbullDescription(true)
+                          onOpen()
+                        }}
+                    >
+                      Развернуть описание
+                    </Button>
+                  </div>
 
                 </div>
                 <div className="flex justify-end mt-4 gap-2">
@@ -136,6 +151,7 @@ const TaskPage = () => {
 
                   <Button onClick={(e) => {
                     e.stopPropagation()
+                    setbullDescription(false)
                     onOpen()
                   }}
                           variant='ghost' color='danger'
@@ -143,37 +159,76 @@ const TaskPage = () => {
                     Удалить задачу
                   </Button>
                 </div>
-              </Card>
+              </div>
 
-              <Modal className='bg-foreground text-background' backdrop='blur' isOpen={isOpen}
-                     onOpenChange={onOpenChange} isDismissable={true}
-                     isKeyboardDismissDisabled={false}>
-                <ModalContent>
-                  {(onClose) => (
-                      <>
-                        <ModalHeader className="flex flex-col gap-1">Удалить?</ModalHeader>
-                        <ModalBody>
-                          <p className='w-full overflow-x-auto line'>
-                            Вы хотите удалить задачу: <span className=' text-primary font-medium '>{data.title}</span>
-                          </p>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button color="primary" onPress={onClose}>
-                            Отмена
-                          </Button>
-                          <Button color="danger" variant="light" onPress={() => {
-                            onClose()
-                            deleteTask(task?.at(0).id).then(() => {
-                              navigate('/')
-                            })
-                          }}>
-                            Удалить
-                          </Button>
-                        </ModalFooter>
-                      </>
-                  )}
-                </ModalContent>
-              </Modal>
+              {isDescription ? (
+                  <Modal className='bg-foreground text-background' backdrop='blur' isOpen={isOpen}
+                         onOpenChange={onOpenChange} isDismissable={true}
+                         isKeyboardDismissDisabled={false}
+                         size='full'
+                  >
+                    <ModalContent>
+                      <ModalHeader className="flex flex-col gap-1">Описание задачи</ModalHeader>
+                      <ModalBody className='line overflow-y-auto'>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                        <p className='my-3'>
+                          {description}
+                        </p>
+                      </ModalBody>
+                    </ModalContent>
+                  </Modal>
+              ) : (
+                  <Modal className='bg-foreground text-background' backdrop='blur' isOpen={isOpen}
+                         onOpenChange={onOpenChange} isDismissable={true}
+                         isKeyboardDismissDisabled={false}>
+                    <ModalContent>
+                      {(onClose) => (
+                          <>
+                            <ModalHeader className="flex flex-col gap-1">Вы хотите удалить задачу ?</ModalHeader>
+                            <ModalBody>
+                              <p className='w-full overflow-x-auto line'>
+                                <p className='text-primary font-medium text-lg'>{task.title}</p>
+                              </p>
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button color="primary" onPress={onClose}>
+                                Отмена
+                              </Button>
+                              <Button color="danger" variant="light" onPress={() => {
+                                onClose()
+                                deleteTask(task?.at(0).id).then(() => {
+                                  navigate('/')
+                                })
+                              }}>
+                                Удалить
+                              </Button>
+                            </ModalFooter>
+                          </>
+                      )}
+                    </ModalContent>
+                  </Modal>
+              )}
+
             </>
         ) : (
             <div className='w-full h-full flex justify-center items-center'><Loader/></div>
