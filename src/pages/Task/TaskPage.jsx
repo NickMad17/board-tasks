@@ -173,27 +173,6 @@ const TaskPage = () => {
                         <p className='my-3'>
                           {description}
                         </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                        <p className='my-3'>
-                          {description}
-                        </p>
                       </ModalBody>
                     </ModalContent>
                   </Modal>
