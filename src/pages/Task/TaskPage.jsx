@@ -124,23 +124,23 @@ const TaskPage = () => {
                   </div>
 
                   <div className='max-sm:flex flex-col'>
-                    <Textarea value={description} onDoubleClick={() => console.log('dfdfdfdf')} disabled={!isRedact}
+                    <Textarea value={description} disabled={!isRedact}
                               variant='bordered' color={getStatusColor()}
                               onInput={e => setDescription(e.target.value)}
                               key={task.id}>
                     </Textarea>
-                    <Button
-                        className='my-3'
-                        variant='bordered'
-                        color={getStatusColor()}
-                        size='sm'
-                        onClick={() => {
-                          setbullDescription(true)
-                          onOpen()
-                        }}
-                    >
-                      Развернуть описание
-                    </Button>
+                    {!isRedact && (
+                        <Button
+                            className='my-3'
+                            variant='bordered'
+                            onClick={() => {
+                              setbullDescription(true)
+                              onOpen()
+                            }}
+                        >
+                          Развернуть описание
+                        </Button>
+                    )}
                   </div>
 
                 </div>
@@ -168,12 +168,42 @@ const TaskPage = () => {
                          size='full'
                   >
                     <ModalContent>
-                      <ModalHeader className="flex flex-col gap-1">Описание задачи</ModalHeader>
-                      <ModalBody className='line overflow-y-auto'>
-                        <p className='my-3'>
-                          {description}
-                        </p>
-                      </ModalBody>
+                      {(onClose) => (
+                          <>
+                            <ModalHeader className="flex flex-col gap-1">Описание задачи</ModalHeader>
+                            <ModalBody className='line overflow-y-auto'>
+                              {isRedact ? (
+                                  <textarea
+                                      className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-warning rounded-2xl`}
+                                      size='lg'
+                                      value={description}
+                                      disabled={!isRedact}
+                                      color={getStatusColor()}
+                                      onInput={e => setDescription(e.target.value)}
+                                      key={task.id}>
+                                  </textarea>
+                              ) : (
+                                  <pre className='text-lg p-4 my-3 text-wrap font-normal'>
+                                {description}
+                              </pre>
+                              )}
+                            </ModalBody>
+                            <ModalFooter>
+                              {isRedact ? (
+                                  <Button variant='flat' color='success' size='lg' onPress={() => setRedact(false)}>
+                                    Готово
+                                  </Button>
+                              ) : (
+                                  <Button variant='flat' color='warning' size='lg' onPress={() => setRedact(true)}>
+                                    Редактировать описание
+                                  </Button>
+                              )}
+                              <Button size='lg' color='success' onPress={onClose}>
+                                Свернуть
+                              </Button>
+                            </ModalFooter>
+                          </>
+                      )}
                     </ModalContent>
                   </Modal>
               ) : (
