@@ -195,10 +195,10 @@ const TaskPage = () => {
                                   </Button>
                               ) : (
                                   <Button variant='flat' color='warning' size='lg' onPress={() => setRedact(true)}>
-                                    Редактировать описание
+                                    Редактировать
                                   </Button>
                               )}
-                              <Button size='lg' color='success' onPress={onClose}>
+                              <Button size='lg' onPress={onClose}>
                                 Свернуть
                               </Button>
                             </ModalFooter>
