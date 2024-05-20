@@ -183,9 +183,9 @@ const TaskPage = () => {
                                       key={task.id}>
                                   </textarea>
                               ) : (
-                                  <pre className='text-lg p-4 my-3 text-wrap font-normal'>
-                                {description}
-                              </pre>
+                                  <pre className='text-lg p-4 my-3 text-wrap'>
+                                    {description}
+                                  </pre>
                               )}
                             </ModalBody>
                             <ModalFooter>
