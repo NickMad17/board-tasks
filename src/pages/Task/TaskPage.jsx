@@ -175,7 +175,6 @@ const TaskPage = () => {
                               {isRedact ? (
                                   <textarea
                                       className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-warning rounded-2xl`}
-                                      size='lg'
                                       value={description}
                                       disabled={!isRedact}
                                       color={getStatusColor()}
