@@ -29,11 +29,14 @@ const TaskPage = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [isDescription, setbullDescription] = useState(null)
   const [loading, setLoading] = useState(null)
+
   const taskId = useParams().id
   const [task, setTask] = useState(null)
   const [status, setStatus] = useState(null)
   const [description, setDescription] = useState(null)
   const [users, setUsers] = useState(null)
+  const [arrayChanges, setArrayChanges] = useState([])
+
   const [user, setUser] = useState(null)
   const [isRedact, setRedact] = useState(false)
   const [typeColor, setTypeColor] = useState(null)
@@ -67,18 +70,26 @@ const TaskPage = () => {
   }, []);
 
   const updateFiled = (field, state) => {
-    updateTask(task.id, [{[field]: state}])
+    setArrayChanges(prevState => {
+          prevState.push({[field]: state})
+          return prevState
+        }
+    )
+  }
+
+  const startUpdate = () => {
+    updateTask(task.id, arrayChanges)
+    setArrayChanges([])
   }
 
   const setRedOption = () => {
     if (isRedact) {
-      console.log(user, changes, 'wwwwww')
       if (changes) {
         updateFiled('assigned_id', user)
-        setTimeout(() => {
-          updateFiled('description', description)
-          updateFiled('types', types)
-        })
+        updateFiled('description', description)
+        updateFiled('types', types)
+        console.log(arrayChanges, 'wwwwwwww')
+        startUpdate()
       }
       setChanges(null)
       setRedact(!isRedact)
@@ -151,7 +162,8 @@ const TaskPage = () => {
                       </Select>
                     </>
 
-                    {isRedact ? <div className='my-5'><UserSelect setChanges={setChanges} color='' items={users} valueItem={user}
+                    {isRedact ? <div className='my-5'><UserSelect setChanges={setChanges} color='' items={users}
+                                                                  valueItem={user}
                                                                   setValue={setUser}/></div>
                         : <UserAssignedTask assigned_id={user}/>}
 
@@ -186,9 +198,15 @@ const TaskPage = () => {
 
                 </div>
                 <div className="flex justify-end mt-4 gap-2">
-                  <Button onPress={setRedOption}
-                          color={isRedact ? 'success' : 'default'}
-                  >{isRedact ? 'Ок' : 'Редактировать'}</Button>
+                  {
+                      status !== 'success' && (
+                          <Button
+                              disabled={true}
+                              onPress={setRedOption}
+                              color={isRedact ? 'success' : 'default'}
+                          >{isRedact ? 'Ок' : 'Редактировать'}</Button>
+                      )
+                  }
 
                   <Button onClick={(e) => {
                     e.stopPropagation()
@@ -223,7 +241,7 @@ const TaskPage = () => {
                                         setChanges(true)
                                       }}
 
-                                />
+                                  />
                               ) : (
                                   <textarea
                                       className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-transparent rounded-2xl`}
@@ -237,14 +255,20 @@ const TaskPage = () => {
                               )}
                             </ModalBody>
                             <ModalFooter>
-                              {isRedact ? (
-                                  <Button variant='flat' color='success' size='lg' onPress={() => setRedact(false)}>
-                                    Готово
-                                  </Button>
-                              ) : (
-                                  <Button variant='flat' color='warning' size='lg' onPress={() => setRedact(true)}>
-                                    Редактировать
-                                  </Button>
+                              {status !== 'success' && (
+                                  isRedact ? (
+                                      <Button variant='flat' color='success' size='lg' onPress={() => {
+                                        setRedOption()
+                                        setRedact(false)
+                                      }}>
+                                        {/*Todo: при нажатии отправка на сервер */}
+                                        Готово
+                                      </Button>
+                                  ) : (
+                                      <Button variant='flat' color='warning' size='lg' onPress={() => setRedact(true)}>
+                                        Редактировать
+                                      </Button>
+                                  )
                               )}
                               <Button size='lg' onPress={onClose}>
                                 Свернуть
@@ -273,7 +297,7 @@ const TaskPage = () => {
                               </Button>
                               <Button color="danger" variant="light" onPress={() => {
                                 onClose()
-                                deleteTask(task?.at(0).id).then(() => {
+                                deleteTask(task.id).then(() => {
                                   navigate('/')
                                 })
                               }}>
