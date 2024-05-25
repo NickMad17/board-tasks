@@ -2,7 +2,7 @@ import {Avatar, Link, Select, SelectItem} from "@nextui-org/react";
 import {baseImageUrl} from "@/config/supabase.js";
 import {setImgUrl} from "@/api/fetchAvatar.js";
 
-const UserSelect = ({items, valueItem, setValue, color, error}) => {
+const UserSelect = ({setChanges ,items, valueItem, setValue, color, error, }) => {
   return (
       <Select
           aria-label='w'
@@ -57,7 +57,10 @@ const UserSelect = ({items, valueItem, setValue, color, error}) => {
           }}
       >
         {(user) => (
-            <SelectItem onPress={() => setValue(user.id)} key={user.id} textValue={user.name}>
+            <SelectItem onPress={() => {
+              setValue(user.id)
+              setChanges(true)
+            }} key={user.id} textValue={user.name}>
               <div className="flex gap-2 items-center">
                 <Avatar alt={user.name} className="flex-shrink-0" size="sm" src={setImgUrl(user.id)} />
                 <div className="flex flex-col">

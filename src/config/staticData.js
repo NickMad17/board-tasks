@@ -43,14 +43,19 @@ export const selectTaskStatusesOnBoard = [
 
 export const selectTaskTypes = [
   {
-    value: "programmer",
-    label: "Программирование",
-    color: 'primary'
+    value: "urgent",
+    label: "Срочная",
+    color: 'danger'
   },
   {
-    value: "engineer",
-    label: "Инженеинг",
+    value: "important",
+    label: "Важаная",
     color: 'warning'
+  },
+  {
+    value: "not-an-urgent",
+    label: "Несрочная",
+    color: 'primary'
   },
 
 ]

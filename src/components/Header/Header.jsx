@@ -32,7 +32,7 @@ const Header = () => {
 
   const menuItems = [
     {
-      name: "Борд",
+      name: "Бордa",
       path: '/',
       click() {
         navigate('/');
@@ -85,7 +85,7 @@ const Header = () => {
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
           <NavbarBrand>
-            <NavLink to='/' className="font-bold text-foreground max-sm:text-[14px]">BOARD</NavLink>
+            <NavLink to='/' className="font-bold text-foreground max-sm:text-[14px]">BOARDA</NavLink>
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify="end">

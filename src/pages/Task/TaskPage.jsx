@@ -18,7 +18,7 @@ import {
 import Loader from "@/components/Loaders/Loader.jsx";
 import PageLayout from "@/components/PageLayout.jsx";
 import UserAssignedTask from "@/components/UserAssignedTask.jsx";
-import {selectTaskStatusesOnBoard} from "@/config/staticData.js";
+import {selectTaskStatusesOnBoard, selectTaskTypes} from "@/config/staticData.js";
 import {updateTask} from "@/api/updateTask.js";
 import {deleteTask} from "@/api/deleteTask.js";
 import {getUsers} from "@/api/getUsers.js";
@@ -36,6 +36,11 @@ const TaskPage = () => {
   const [users, setUsers] = useState(null)
   const [user, setUser] = useState(null)
   const [isRedact, setRedact] = useState(false)
+  const [typeColor, setTypeColor] = useState(null)
+  const [types, setTypes] = useState(null)
+  const [changes, setChanges] = useState(null)
+
+
   const getStatusColor = () => {
     return status === 'pending' ? 'secondary' : status === 'progress' ? 'warning' : status === 'review' ? 'danger' : status === 'success' ? 'success' : 'default'
   }
@@ -46,6 +51,7 @@ const TaskPage = () => {
       setTask(data?.at(0))
       setStatus(data?.at(0)?.status)
       setDescription(data?.at(0)?.description)
+      setTypes(data?.at(0)?.types)
       if (data.at(0)?.isAssigned) {
         setUser(data.at(0)?.assigned_id)
       }
@@ -66,9 +72,15 @@ const TaskPage = () => {
 
   const setRedOption = () => {
     if (isRedact) {
-      console.log(user)
-      updateFiled('description', description)
-      updateFiled('assigned_id', user)
+      console.log(user, changes, 'wwwwww')
+      if (changes) {
+        updateFiled('assigned_id', user)
+        setTimeout(() => {
+          updateFiled('description', description)
+          updateFiled('types', types)
+        })
+      }
+      setChanges(null)
       setRedact(!isRedact)
     } else {
       setRedact(!isRedact)
@@ -81,20 +93,43 @@ const TaskPage = () => {
             <>
               <div className='max-md:mx-0 mx-5 p-5 overflow-auto'>
                 <div key={task.id + 3}>
-                  <div className="mb-10 flex flex-wrap gap-5 justify-between items-center">
+                  <div className='mb-10 flex flex-wrap gap-5 justify-between items-center'>
                     <h2
                         className={`text-3xl font-[500] text-${getStatusColor()}`}
                     >
                       {task.title}
                     </h2>
-                    {task.types?.map(type => {
-                      if (type === "programmer") {
-                        return <Chip key={type} size='lg' color="primary" variant="bordered">Программист</Chip>
-                      }
-                      if (type === "engineer") {
-                        return <Chip key={type} size='lg' color="warning" variant="bordered">Инженер</Chip>
-                      }
-                    })}
+                    {!isRedact ? (
+                        types?.map(type => {
+                          if (type === "urgent") {
+                            return <Chip key={type} size='lg' color="danger" variant="bordered">Срочная</Chip>
+                          }
+                          if (type === "important") {
+                            return <Chip key={type} size='lg' color="warning" variant="bordered">Важаная</Chip>
+                          }
+                          if (type === "not-an-urgent") {
+                            return <Chip key={type} size='lg' color="primary" variant="bordered">Несрочная</Chip>
+                          }
+                        })
+                    ) : (
+                        <Select
+                            label="Критичность задачи"
+                            placeholder="Выберите критичность задачи"
+                            className="max-w-44"
+                            variant='bordered'
+                            defaultSelectedKeys={types}
+                            color={typeColor}
+                        >
+                          {selectTaskTypes?.map((type) => {
+                            return <SelectItem onPress={() => {
+                              setTypeColor(type.color)
+                              setTypes([type.value])
+                              setChanges(true)
+                            }} key={type.value}
+                                               value={type.value}>{type.label}</SelectItem>
+                          })}
+                        </Select>
+                    )}
                   </div>
 
                   <div className="flex gap-8 flex-col">
@@ -116,7 +151,7 @@ const TaskPage = () => {
                       </Select>
                     </>
 
-                    {isRedact ? <div className='my-5'><UserSelect color='' items={users} valueItem={user}
+                    {isRedact ? <div className='my-5'><UserSelect setChanges={setChanges} color='' items={users} valueItem={user}
                                                                   setValue={setUser}/></div>
                         : <UserAssignedTask assigned_id={user}/>}
 
@@ -124,12 +159,18 @@ const TaskPage = () => {
                   </div>
 
                   <div className='max-sm:flex flex-col'>
-                    <Textarea value={description} disabled={!isRedact}
-                              variant='bordered' color={getStatusColor()}
-                              onInput={e => setDescription(e.target.value)}
-                              key={task.id}>
-                    </Textarea>
-                    {!isRedact && (
+                    {(description || isRedact) && (
+                        <Textarea value={description} disabled={!isRedact}
+                                  variant='bordered' color={getStatusColor()}
+                                  onInput={e => {
+                                    setDescription(e.target.value)
+                                    setChanges(true)
+                                  }
+                                  }
+                                  key={task.id}>
+                        </Textarea>
+                    )}
+                    {!isRedact && description && (
                         <Button
                             className='my-3'
                             variant='bordered'
@@ -177,14 +218,22 @@ const TaskPage = () => {
                                       className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-warning rounded-2xl`}
                                       value={description}
                                       disabled={!isRedact}
-                                      color={getStatusColor()}
-                                      onInput={e => setDescription(e.target.value)}
-                                      key={task.id}>
-                                  </textarea>
+                                      onInput={e => {
+                                        setDescription(e.target.value)
+                                        setChanges(true)
+                                      }}
+
+                                />
                               ) : (
-                                  <pre className='text-lg p-4 my-3 text-wrap'>
-                                    {description}
-                                  </pre>
+                                  <textarea
+                                      className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-transparent rounded-2xl`}
+                                      value={description}
+                                      disabled={!isRedact}
+                                      onInput={e => {
+                                        setDescription(e.target.value)
+                                        setChanges(true)
+                                      }}
+                                  />
                               )}
                             </ModalBody>
                             <ModalFooter>

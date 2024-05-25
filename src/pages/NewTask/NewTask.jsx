@@ -45,7 +45,7 @@ const NewTask = () => {
       status,
       description,
       assigned_id: userId,
-      isAssigned : !!userId,
+      isAssigned: !!userId,
       types: [types],
     }
 
@@ -80,7 +80,9 @@ const NewTask = () => {
 
   return (
       <>
-        {loading && <div className='fixed w-[100vw] h-[100vh] bg-[#0000007E] z-50 flex justify-center items-center'><Loader/></div>}
+        {loading &&
+            <div className='fixed w-[100vw] h-[100vh] bg-[#0000007E] z-50 flex justify-center items-center'><Loader/>
+            </div>}
         <PageLayout>
           <div className='w-full flex flex-col gap-8 mt-5 md:px-20'>
             <div className='flex flex-wrap gap-3 justify-between items-end'>
@@ -88,7 +90,7 @@ const NewTask = () => {
                 <p className='font-[400] text-lg ml-1'>Название задачи</p>
                 <div className='flex gap-4 items-center'>
                   <Input
-                      errorMessage={isValidText(title) ? '': error}
+                      errorMessage={isValidText(title) ? '' : error}
                       value={title}
                       isClearable
                       onValueChange={setTitle}
@@ -100,25 +102,24 @@ const NewTask = () => {
                       placeholder='Введите название'
                   />
                   <Tooltip content="Сгенерируй описание задачи ">
-                    <BotMessageSquare onClick={getAiContent} className={`text-${getColor()} hover:opacity-70 transition cursor-pointer`}/>
+                    <BotMessageSquare onClick={getAiContent}
+                                      className={`text-${getColor()} hover:opacity-70 transition cursor-pointer`}/>
                   </Tooltip>
                 </div>
               </div>
-              <>
-                <Select
-                    errorMessage={status ? '': error}
-                    label="Статус задачи"
-                    placeholder="Выберите статус задачи"
-                    className="max-w-sm "
-                    defaultSelectedKeys={status ? [status] : ''}
-                    color={getColor()}
-                >
-                  {selectTaskStatuses?.map((status) => {
-                    return <SelectItem onPress={() => setStatus(status.value)} key={status.value}
-                                       value={status.value}>{status.label}</SelectItem>
-                  })}
-                </Select>
-              </>
+              <Select
+                  errorMessage={status ? '' : error}
+                  label="Статус задачи"
+                  placeholder="Выберите статус задачи"
+                  className="max-w-sm "
+                  defaultSelectedKeys={status ? [status] : ''}
+                  color={getColor()}
+              >
+                {selectTaskStatuses?.map((status) => {
+                  return <SelectItem onPress={() => setStatus(status.value)} key={status.value}
+                                     value={status.value}>{status.label}</SelectItem>
+                })}
+              </Select>
             </div>
             <div className='flex flex-col gap-2'>
               <p className='font-[400] text-lg ml-1'>Описание задачи</p>
@@ -134,12 +135,12 @@ const NewTask = () => {
             </div>
             <div className='flex gap-3 flex-wrap'>
               <Select
-                  label="Выберете Тип задачи"
-                  placeholder="Выберите статус задачи"
-                  className="max-w-sm "
+                  label="Критичность задачи"
+                  placeholder="Выберите критичность задачи"
+                  className="max-w-sm"
                   variant='bordered'
                   color={typeColor}
-                  errorMessage={types ? '': error}
+                  errorMessage={types ? '' : error}
               >
                 {selectTaskTypes?.map((type) => {
                   return <SelectItem onPress={() => {

@@ -12,11 +12,14 @@ const TaskCard = ({data, type}) => {
 
             <div className="w-full flex gap-2 overflow-x-auto px-1 line">
               {data?.types?.map(type => {
-                if (type === "programmer") {
-                  return <Chip key={type} size='lg' className='max-md:text-sm' color="primary" variant="bordered">Программирование</Chip>
+                if (type === "urgent") {
+                  return <Chip key={type} size='lg' className='max-md:text-sm' color="danger" variant="bordered">Срочная</Chip>
                 }
-                if (type === "engineer") {
-                  return <Chip key={type} size='lg' className='max-md:text-sm' color="warning" variant="bordered">Инженеринг</Chip>
+                if (type === "important") {
+                  return <Chip key={type} size='lg' className='max-md:text-sm' color="warning" variant="bordered">Важаная</Chip>
+                }
+                if (type === "not-an-urgent") {
+                  return <Chip key={type} size='lg' className='max-md:text-sm' color="primary" variant="bordered">Несрочная</Chip>
                 }
               })}
             </div>
