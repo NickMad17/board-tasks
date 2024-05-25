@@ -69,12 +69,17 @@ const TaskPage = () => {
     })
   }, []);
 
-  const updateFiled = (field, state) => {
-    setArrayChanges(prevState => {
-          prevState.push({[field]: state})
-          return prevState
-        }
-    )
+  const updateFiled = (field, state, quantityOne ) => {
+    if (quantityOne) {
+      updateTask(task.id, [{[field]: state}])
+    } else {
+      setArrayChanges(prevState => {
+            prevState.push({[field]: state})
+            return prevState
+          }
+      )
+    }
+
   }
 
   const startUpdate = () => {
@@ -154,7 +159,7 @@ const TaskPage = () => {
                       >
                         {selectTaskStatusesOnBoard?.map((statuses) => {
                           return <SelectItem onPress={() => {
-                            updateFiled('status', statuses.value)
+                            updateFiled('status', statuses.value, true)
                             setStatus(statuses.value)
                           }} key={statuses.value}
                                              value={statuses.value}>{statuses.label}</SelectItem>
