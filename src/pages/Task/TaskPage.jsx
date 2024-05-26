@@ -177,7 +177,7 @@ const TaskPage = () => {
 
                   <div className='max-sm:flex flex-col'>
                     {(description || isRedact) && (
-                        <Textarea value={description} disabled={!isRedact}
+                        <Textarea value={description} readOnly={!isRedact}
                                   variant='bordered' color={getStatusColor()}
                                   onInput={e => {
                                     setDescription(e.target.value)
