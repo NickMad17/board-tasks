@@ -251,7 +251,7 @@ const TaskPage = () => {
                                   <textarea
                                       className={`h-full text-lg font-normal text-wrap text-background bg-foreground p-4 leading-8 border border-transparent rounded-2xl`}
                                       value={description}
-                                      disabled={!isRedact}
+                                      readOnly={!isRedact}
                                       onInput={e => {
                                         setDescription(e.target.value)
                                         setChanges(true)
