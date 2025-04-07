@@ -1,5 +1,5 @@
-const YANDEX_API_KEY = 'AQVNwN75zaQ7N0_wS5EfhXNc8Ca8JIauHEw4UHRC'
-const YANDEX_FOLDER_ID = 'b1g98li0e8rmsd5ar7rf'
+const YANDEX_API_KEY = ''
+const YANDEX_FOLDER_ID = ''
 
 export const getMessage = (mess) => `
   разбей задачу ${mess} на подзадачи и поставь примерное время выполнения.Не пиши ничего лишнего. Просто пришли список.
